@@ -2,6 +2,19 @@
 {% load static %}
 {% block content %}
      <h3>User home page</h3>
+     <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 mb-4">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="button">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 
 
      <div class="container mt-4">
@@ -13,7 +26,7 @@
                           <div class="box-element product">
                               <h6><strong>Genre</strong></h6>
                               <hr>
-                              <button class="btn btn-outline-primary add-btn">View Genre</button>
+                              <a class="btn btn-outline-primary add-btn" href="{% url 'products' %}">View Genre</a>
                                <!--<a class="btn btn-outline-success" href="#">View</a>-->
                               
                           </div>
@@ -28,7 +41,7 @@
                           <div class="box-element product">
                               <h6><strong>Genre</strong></h6>
                               <hr>
-                              <button class="btn btn-outline-primary add-btn">View Genre</button>
+                              <a class="btn btn-outline-primary add-btn"href="{% url 'products' %}">View Genre</a>
                                <!--<a class="btn btn-outline-success" href="#">View</a>-->
                           </div>
                       </div>
@@ -41,7 +54,7 @@
                        <div class="box-element product">
                            <h6><strong>Genre</strong></h6>
                            <hr>
-                           <button class="btn btn-outline-primary add-btn">View Genre</button>
+                           <a class="btn btn-outline-primary add-btn" href="{% url 'products' %}">View Genre</a>
                                <!--<a class="btn btn-outline-success" href="#">View</a>-->
                        </div>
                    </div>
@@ -54,7 +67,7 @@
                        <div class="box-element product">
                            <h6><strong>Genre</strong></h6>
                            <hr>
-                           <button class="btn btn-outline-primary add-btn">View Genre</button>
+                           <a class="btn btn-outline-primary add-btn" href="{% url 'products' %}">View Genre</a>
                                <!--<a class="btn btn-outline-success" href="#">View</a>-->
                        </div>
                    </div>
@@ -67,7 +80,7 @@
                        <div class="box-element product">
                            <h6><strong>Genre</strong></h6>
                            <hr>
-                           <button class="btn btn-outline-primary add-btn">View Genre</button>
+                           <a class="btn btn-outline-primary add-btn" href="{% url 'products' %}">View Genre</a>
                                <!--<a class="btn btn-outline-success" href="#">View</a>-->
                        </div>
                    </div>
@@ -80,7 +93,7 @@
                        <div class="box-element product">
                            <h6><strong>Genre</strong></h6>
                            <hr>
-                           <button class="btn btn-outline-primary add-btn">View Genre</button>
+                           <a class="btn btn-outline-primary add-btn" href="{% url 'products' %}">View Genre</a>
                                <!--<a class="btn btn-outline-success" href="#">View</a>-->
                        </div>
                    </div>
