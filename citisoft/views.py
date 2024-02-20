@@ -47,5 +47,51 @@ def category(request):   # Request handler
 def delete(request):   # Request handler
    context = {}   # Initialize context dictionary
    # Render delete.html with context
-   return render(request, 'delete.html', context)
+   return render(request, 'citisoft/user/delete.html', context)
 
+
+def userlogin(request):   # Request handler
+   context = {}   # Initialize context dictionary
+   # Render userlogin.html with context
+   return render(request, 'citisoft/user/userlogin.html', context)
+
+
+def usersignup(request):   # Request handler
+   context = {}   # Initialize context dictionary
+   # Render usersignup.html with context
+   return render(request, 'citisoft/user/usersignup.html', context)
+
+
+def vendor_home(request):   # Request handler
+   context = {}   # Initialize context dictionary
+   # Render vendor_home.html with context
+   return render(request, 'citisoft/vendor/vendor_home.html', context)
+
+
+def vendorsignup(request):   # Request handler
+   context = {}   # Initialize context dictionary
+   # Render vendorsignup.html with context
+   return render(request, 'citisoft/vendor/vendorsignup.html', context)
+
+
+def vendorlogin(request):   # Request handler
+   context = {}   # Initialize context dictionary
+   # Render vendorlogin.html with context
+   return render(request, 'citisoft/vendor/vendorlogin.html', context)
+
+
+def edits(request):   # Request handler
+   context = {}   # Initialize context dictionary
+   # Render vendorlogin.html with context
+   return render(request, 'citisoft/vendor/edits.html', context)
+
+
+def view(request):   # Request handler
+   context = {}   # Initialize context dictionary
+   # Render view.html with context
+   return render(request, 'citisoft/vendor/view.html', context)
+
+def clientinfo(request):   # Request handler
+   context = {}   # Initialize context dictionary
+   # Render view.html with context
+   return render(request, 'citisoft/vendor/clientinfo.html', context)

@@ -1,0 +1,81 @@
+{% extends 'citisoft/user/index.html' %}
+{% load static %}
+{% block content %}
+     <h3>View your Client Information, dear vendor!</h3><br/><br/>
+
+     <a  class="btn btn-outline-primary" href="{% url 'vendor_home' %}">&#x2190; Back</a>
+     <div class="row">
+		<div class="col-lg-12">
+			<div class="box-element">
+				<br>
+				<br>
+				<table class="table">
+					<tr>
+						<th><h5>Client name: <strong>{{ user_name }} </strong></h5></th>
+						<!--<th><h5>Genre:<strong>{{ genre_name }} </strong></h5></th>
+						<th>
+							<a  style="float:right; margin:5px;" class="btn btn-outline-primary" href="{% url 'choice' %}">View</a>
+						</th>
+                              <th>
+							<a  style="float:right; margin:5px;" class="btn btn-outline-danger" href="{% url 'cart' %}">Delete</a>
+						</th>-->
+					</tr>
+
+                         <tr>
+                            <th><h5>Client name: <strong>{{ user_name }} </strong></h5></th>
+                            <!--<th><h5>Genre:<strong>{{ genre_name }} </strong></h5></th>
+                            <th>
+                                <a  style="float:right; margin:5px;" class="btn btn-outline-primary" href="{% url 'choice' %}">View</a>
+                            </th>
+                                  <th>
+                                <a  style="float:right; margin:5px;" class="btn btn-outline-danger" href="{% url 'cart' %}">Delete</a>
+                            </th>-->
+					</tr>
+
+                         <tr>
+                            <th><h5>Client name: <strong>{{ user_name }} </strong></h5></th>
+                            <!--<th><h5>Genre:<strong>{{ genre_name }} </strong></h5></th>
+                            <th>
+                                <a  style="float:right; margin:5px;" class="btn btn-outline-primary" href="{% url 'choice' %}">View</a>
+                            </th>
+                                  <th>
+                                <a  style="float:right; margin:5px;" class="btn btn-outline-danger" href="{% url 'cart' %}">Delete</a>
+                            </th>-->
+					</tr>
+
+                         <tr>
+                            <th><h5>Client name: <strong>{{ user_name }} </strong></h5></th>
+                            <!--<th><h5>Genre:<strong>{{ genre_name }} </strong></h5></th>
+                            <th>
+                                <a  style="float:right; margin:5px;" class="btn btn-outline-primary" href="{% url 'choice' %}">View</a>
+                            </th>
+                                  <th>
+                                <a  style="float:right; margin:5px;" class="btn btn-outline-danger" href="{% url 'cart' %}">Delete</a>
+                            </th>-->
+					</tr>
+
+                         <tr>
+                            <th><h5>Client name: <strong>{{ user_name }} </strong></h5></th>
+                            <!--<th><h5>Genre:<strong>{{ genre_name }} </strong></h5></th>
+                            <th>
+                                <a  style="float:right; margin:5px;" class="btn btn-outline-primary" href="{% url 'choice' %}">View</a>
+                            </th>
+                                  <th>
+                                <a  style="float:right; margin:5px;" class="btn btn-outline-danger" href="{% url 'cart' %}">Delete</a>
+                            </th>-->
+					</tr>
+
+                         <tr>
+                            <th><h5>Client name: <strong>{{ user_name }} </strong></h5></th>
+                            <!--<th><h5>Genre:<strong>{{ genre_name }} </strong></h5></th>
+                            <th>
+                                <a  style="float:right; margin:5px;" class="btn btn-outline-primary" href="{% url 'choice' %}">View</a>
+                            </th>
+                                  <th>
+                                <a  style="float:right; margin:5px;" class="btn btn-outline-danger" href="{% url 'cart' %}">Delete</a>
+                            </th>-->
+					</tr>
+				</table>
+
+			</div>
+{% endblock content%}
