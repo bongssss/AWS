@@ -93,5 +93,23 @@ def view(request):   # Request handler
 
 def clientinfo(request):   # Request handler
    context = {}   # Initialize context dictionary
-   # Render view.html with context
+   # Render clientinfo.html with context
    return render(request, 'citisoft/vendor/clientinfo.html', context)
+
+
+def vendorsettings(request):   # Request handler
+   context = {}   # Initialize context dictionary
+   # Render vendorsettings.html with context
+   return render(request, 'citisoft/vendor/vendorsettings.html', context)
+
+
+def vendorlogout(request):   # Request handler
+   context = {}   # Initialize context dictionary
+   # Render vendorlogout.html with context
+   return render(request, 'citisoft/vendor/vendorlogout.html', context)
+
+
+def logout(request):   # Request handler
+   context = {}   # Initialize context dictionary
+   # Render v.html with context
+   return render(request, 'citisoft/user/logout.html', context)
