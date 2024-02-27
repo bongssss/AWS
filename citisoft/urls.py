@@ -14,10 +14,13 @@ urlpatterns = [
     path('usersignup/', views.usersignup, name="usersignup"),
     path('vendor_home/', views.vendor_home, name="vendor_home"),
     path('delete/', views.delete, name="delete"),
-    path('vendorsignup/', views.vendorlogin, name="Vendorlogin"),
-    path('settings/', views.vendorsignup, name="vendorsignup"),
+    path('vendorlogin/', views.vendorlogin, name="vendorlogin"),
+    path('vendorsettings/', views.vendorsettings, name="vendorsettings"),
+    path('vendorsignup/', views.vendorsignup, name="vendorsignup"),
     path('edits/', views.edits, name="edits"),
     path('view/', views.view, name="view"),
     path('clientinfo/', views.clientinfo, name="clientinfo"),
+    path('logout/', views.logout, name="logout"),
+    path('vendorlogout/', views.vendorlogout, name="vendorlogout"),
  
 ]
