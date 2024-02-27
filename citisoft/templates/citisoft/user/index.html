@@ -10,10 +10,12 @@
 
 	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
+  <script src="{%static 'js/index.js'%}"></script>
+
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-blue bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-blue bg-dark">{% block navigation%}
         <a class="navbar-brand" href="#">Citisoft</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -45,7 +47,7 @@
           <div class="form-inline my-2 my-lg-0">
             <a href="#"class="btn btn-primary">Login/Signup</a>
         </div>
-      </nav>
+      </nav> {%endblock navigation%}
   
 
      <div class="container">
@@ -79,12 +81,21 @@
     <div class="row">
       <div class="col-12">
         <div class="grid-item">
-          <!-- Content for rectangular space 1 -->
-          <h3>Services</h3>
-          <p><em>Checkout our wide range of investment reccomendation services</em></p>
-          <a class="btn btn-primary" href="{% url 'userlogin' %}">services</a>
+            <!-- Content for rectangular space 1 -->
+            <h3>Services</h3>
+            <p><em>Checkout our wide range of investment recommendation services</em></p>
+            <a class="btn btn-primary" href="#" onclick="toggleServices()">Services</a>
+            <p id="servicesParagraph" style="display: none;">
+                Save time and resources by getting recommendations from the best professionals in the field. 
+                Our team consists of experts who have years
+                of experience in the financial services industry and more
+              We provide a variety of financial products and services including wealth management, 
+              enterprise architecture, governance, Business Process Management, Alternative Investment,
+               Process Automation and many more!
+              
+            </p>
         </div>
-      </div>
+    </div>
       <div class="col-12">
         <div class="grid-item">
           <!-- Content for rectangular space 2 -->
@@ -98,7 +109,12 @@
           <!-- Content for rectangular space 3 -->
           <h3>Vendors</h3>
           <p><em>Take a quick look at our best performing Financial service partners.</em></p>
-          <a class="btn btn-primary" href="{% url 'userlogin' %}">our Vendors</a>
+          <a class="btn btn-primary" href="#" onclick="toggleServices2()">Our Vendors</a>
+            <p id="vendorsParagraph" style="display: none;">
+              Our Esteemed Partners include: IBM watsonX, CloudAttribution, ADDEPAR INC and many more!
+                  <!-- Add more services as needed -->
+              
+            </p>
         </div>
       </div>
     </div>
