@@ -65,7 +65,78 @@
                 </div>
             </div>
         </main>
+
+        <script>
+            document.getElementById('signupForm').addEventListener('submit', function (event) {
+                var email = document.getElementById('email').value;
+                var confirmEmail = document.getElementById('confirmEmail').value;
+                var password = document.getElementById('password').value;
+                var confirmPassword = document.getElementById('confirmPassword').value;
+                var country = document.getElementById('countrySelect').value;
+                var emailError = document.getElementById('emailError');
+                var confirmEmailError = document.getElementById('confirmEmailError');
+                var passwordError = document.getElementById('passwordError');
+                var confirmPasswordError = document.getElementById('confirmPasswordError');
+                var countrySelectError = document.getElementById('countrySelectError');
+                var isValid = true;
         
+                // Email validation
+                if (!isValidEmail(email)) {
+                    emailError.innerText = 'Please enter a valid email address';
+                    isValid = false;
+                } else {
+                    emailError.innerText = '';
+                }
+        
+                // Confirm Email validation
+                if (email !== confirmEmail) {
+                    confirmEmailError.innerText = 'Email addresses do not match';
+                    isValid = false;
+                } else {
+                    confirmEmailError.innerText = '';
+                }
+        
+                // Password validation
+                if (!isValidPassword(password)) {
+                    passwordError.innerText = 'Password must be at least 8 characters long';
+                    isValid = false;
+                } else {
+                    passwordError.innerText = '';
+                }
+        
+                // Confirm Password validation
+                if (password !== confirmPassword) {
+                    confirmPasswordError.innerText = 'Passwords do not match';
+                    isValid = false;
+                } else {
+                    confirmPasswordError.innerText = '';
+                }
+        
+                // Country select validation
+                if (country === null || country === "") {
+                    countrySelectError.innerText = 'Please select a country';
+                    isValid = false;
+                } else {
+                    countrySelectError.innerText = '';
+                }
+        
+                if (!isValid) {
+                    event.preventDefault(); // Prevent form submission if validation fails
+                }
+            });
+        
+            function isValidEmail(email) {
+                // Basic email validation
+                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+        
+            function isValidPassword(password) {
+                // Password must be at least 8 characters long
+                return password.length >= 8;
+            }
+        </script>
+
              <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
              
                  </body>
