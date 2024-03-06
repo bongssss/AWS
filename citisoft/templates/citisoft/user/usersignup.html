@@ -56,10 +56,15 @@
                        </div>
                        <br>
                        <select class="form-select" id="countrySelect">
-                           <option selected disabled>Country</option>
-                           <option>UK</option>
-                           <option>US</option>
-                           <option>Nigeria</option>
+                        <option selected disabled>Country</option>
+                        <option>Algeria</option>
+                        <option>Canada</option>
+                        <option>United Kingdom</option>
+                        <option>United States</option>
+                        <option>Nigeria</option>
+                        <option>Kenya</option>
+                        <option>South Africa</option>
+                        <option>Other</option>
                        </select>
                        <div id="countrySelectError" class="text-danger"></div>
                        <br>
@@ -75,10 +80,14 @@
                            <div id="confirmPasswordError" class="text-danger"></div>
                        </div>
                        <br>
-                       <div class="d-grid mx-auto gap-3" style="max-width: 200px;">
+                       <tr class="d-grid mx-auto gap-3" style="max-width: 200px;">
+                        <th>
                            <button class="btn btn-primary btn-lg mb-2" type="submit">Signup</button>
+                        </th>
+                        <th>
                            <button class="btn btn-outline-danger btn-lg mb-2" type="button" style="float:right; margin:5px;">Cancel</button>
-                       </div>
+                        </th>
+                       </tr>
                        <div class="mt-5 text-body-secondary">
                            <p class="d-inline mr-4">Opening a new User Account? <a href="{% url 'usersignup' %}">Sign up here</a></p>
                            <br>
@@ -161,7 +170,7 @@
        }
    </script>
 
-        <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+        <!--<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>-->
         
             </body>
 {% endblock content %}

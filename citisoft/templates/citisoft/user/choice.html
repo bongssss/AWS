@@ -48,8 +48,9 @@
 				<br>
 				<table class="table">
 					<tr>
-						<th><h5>Company Name: <strong>{{ company_name }} </strong></h5></th>
-						<th><h5>Genre/Type:<strong>{{ genre_name }} </strong></h5></th>
+						
+						<th><h5>Company Name: <strong>{{ VENDOR.name }}</strong></h5></th>
+						<th><h5>Genre/Type:<strong>{{VENDOR.genre}} </strong></h5></th>
 						<th>
 							<a  style="float:right; margin:5px;" class="btn btn-outline-primary" href="{% url 'cart' %}">Save</a>
 						</th>
@@ -65,18 +66,18 @@
 			<div class="box-element">
 				<div class="cart-row">
 					<div style="flex:2"></div>
-					<div style="flex:2"><strong>Description: </strong><p>{{ description }} </p></div>
-					<div style="flex:1"><strong>Date Established:</strong><p>{{ date_established }} </p></div>
-					<div style="flex:1"><strong>Location Countries:</strong><p>{{ country }} </p></div>
-					<div style="flex:1"><strong>Address: </strong><p>{{ address }} </p></div>
-                         <div style="flex:2"><strong>Contact Telephone:  </strong><p>{{ telephone }} </p></div>
-					<div style="flex:1"><strong>Email:</strong><p>{{ email }} </p></div>
-					<div style="flex:1"><strong>No of emplyees:</strong><p>{{ num_of_employees }} </p></div>
-					<div style="flex:1"><strong>International Professional Services:</strong><p>{{ Int_professional_services }} </p></div>
-                         <div style="flex:2"><strong>business Areas: </strong> <p>{{ business_areas }}</p></div>
-					<div style="flex:1"><strong>Client types: </strong><p>{{ client_types }},&nbsp;</p></div>
-					<div style="flex:1"><strong>Cloud Enabled/ Native Based: </strong><p>{{ cloud_or_native }}</p></div>
-					<div style="flex:1"><strong>Additional Infromation: </strong><p>{{ additional_information}}</p></div>
+					<div style="flex:2"><strong>Description: </strong><p>{{ VENDOR.description }} </p></div>
+					<div style="flex:1"><strong>Date Established:</strong><p>{{ VENDOR.date_est }} </p></div>
+					<div style="flex:1"><strong>Location Countries:</strong><p>{{ VENDOR.location }} </p></div>
+					<div style="flex:1"><strong>Address: </strong><p>{{ VENDOR.address }} </p></div>
+                         <div style="flex:2"><strong>Contact Telephone:  </strong><p>{{ VENDOR.contact_tel }} </p></div>
+					<div style="flex:1"><strong>Email:</strong><p>{{ VENDOR.email }} </p></div>
+					<div style="flex:1"><strong>No of emplyees:</strong><p>{{ VENDOR.num_of_employees }} </p></div>
+					<div style="flex:1"><strong>International Professional Services:</strong><p>{{ VENDOR.Int_pro_services }} </p></div>
+                         <div style="flex:2"><strong>business Areas: </strong> <p>{{ VENDOR.business_areas }}</p></div>
+					<div style="flex:1"><strong>Client types: </strong><p>{{ VENDOR.client_types }}</p></div>
+					<div style="flex:1"><strong>Cloud Enabled/ Native Based: </strong><p>{{ VENDOR.cloud_or_native }}</p></div>
+					<div style="flex:1"><strong>Additional Infromation: </strong><p>{{ VENDOR.added_info}}</p></div>
 				</div>
 				
 				<!--<div class="cart-row">
