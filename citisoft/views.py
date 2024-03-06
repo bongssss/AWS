@@ -1,4 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.http.response import HttpResponse
+from django.template import loader
+from .models import *
+from .models import Vendorr
 
 # Create your views here.
 # Function-based view for index page
@@ -15,24 +19,31 @@ def settings(request):   # Request handler
 
 # Function-based view for products page
 def products(request):   # Request handler
-   context = {}   # Initialize context dictionary
+   vendor = Vendorr.objects.all()
+   context = {'Vendors': vendor}   # Initialize context dictionary
    # Render products.html with context
    return render(request, 'citisoft/user/products.html', context)
 
 # Function-based view for home page
 def home(request):   # Request handler
-   context = {}   # Initialize context dictionary
+   vendor = Vendorr.objects.all()
+   context = {'Vendors': vendor}   # Initialize context dictionary
    # Render home.html with context
    return render(request, 'citisoft/user/home.html', context)
 
 # Function-based view for choice page
-def choice(request):   # Request handler
-   context = {}   # Initialize context dictionary
+def choice(request, vendor_id):   # Request handler
+      vendor = get_object_or_404(Vendorr, pk=vendor_id)  # Get the requested product or display a 404 error if it
+      context = {'VENDOR': vendor}   # Initialize context dictionary
    # Render choice.html with context
-   return render(request, 'citisoft/user/choice.html', context)
+      return render(request, 'citisoft/user/choice.html', context)
 
 # Function-based view for cart page
 def cart(request):   # Request handler
+  # if request.user.is_authenticated:  # If user is
+   #   client = request.user.client  # authenticated, get the corresponding Client object
+   #   vendor, created = Vendorr.objects.get_or_create(client=client, complete = False)  # and create a new Vendor associated to this Client
+       
    context = {}   # Initialize context dictionary
    # Render cart.html with context
    return render(request, 'citisoft/user/cart.html', context)

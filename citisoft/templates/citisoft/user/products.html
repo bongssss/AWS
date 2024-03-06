@@ -42,37 +42,38 @@
       <br>
       <br>
 
-       <div class="container mt-4">
-          <div class="row justify-content-center">
-              <div class="col-lg-6 mb-4">
-                  <div class="row">
-
-               
-
-                      <div class="col-lg-12">
-                          <img class="thumbnail img-fluid" src="{% static 'images/product placeholder.png' %}" style="max-width: 80%;" alt="Product Image">
-                          <div class="box-element product">
-                              <h6><strong>Company name</strong></h6>
-                              <hr>
-                              <a class="btn btn-outline-primary add-btn" href="{% url 'choice' %}">View Company</a>
-                               <a class="btn btn-outline-success" href="{% url 'cart' %}">Save</a>
-                              
-                          </div>
-                      </div>
-                  </div>
-              </div><br>
+      <div class="container mt-4">
+        <div class="row justify-content-center">
+            {% for vendor in Vendors %}
+            <div class="col-lg-4 mb-4"> <!-- Adjust the column width based on your preference -->
+                <div class="card">
+                    <!--<img class="card-img-top" src="{% static 'images/product placeholder.png' %}" alt="Product Image">-->
+                    <div class="card-body">
+                        <h5 class="card-title">{{ vendor.name }}</h5>
+                        <p class="card-text">{{ vendor.description }}</p>
+                        <a href="{% url 'choice'  %}" class="btn btn-outline-primary">View Company</a>
+                        <a href="{% url 'cart' %}" class="btn btn-outline-success">Save</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <br>
       
-              <div class="col-lg-6 mb-4">
+              <!--<div class="col-lg-6 mb-4">
                   <div class="row">
+                    {%for vendor in  Vendors%}
                       <div class="col-lg-12">
                           <img class="thumbnail img-fluid" src="{% static 'images/product placeholder.png' %}" style="max-width: 80%;" alt="Product Image">
                           <div class="box-element product">
-                              <h6><strong>Company name</strong></h6>
+                              <h6><strong>{{vendor.name}}</strong></h6>
                               <hr>
                               <a class="btn btn-outline-primary add-btn"href="{% url 'choice' %}">View Company</a>
                                <a class="btn btn-outline-success" href="{% url 'cart' %}">Save</a>
                           </div>
                       </div>
+                    {% endfor %}
                   </div>
               </div>
               <div class="col-lg-6 mb-4">
@@ -123,7 +124,7 @@
                            <hr>
                            <a class="btn btn-outline-primary add-btn" href="{% url 'choice' %}">View Company</a>
                                <a class="btn btn-outline-success" href="{% url 'cart' %}">Save</a>
-                       </div>
+                       </div>-->
                    </div>
                </div>
            </div>

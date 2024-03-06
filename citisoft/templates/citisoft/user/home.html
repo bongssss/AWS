@@ -24,7 +24,7 @@
     </div>
 </nav>{%endblock navigation%}
 {% block content %}
-     <h3>User home page</h3>
+     <h3>At citisoft, you can Invest with different a wide veraity of companies!</h3>
      <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-lg-6 mb-4">
@@ -42,22 +42,25 @@
 
      <div class="container mt-4">
           <div class="row justify-content-center">
+            {% for vendor in Vendors %}
               <div class="col-lg-6 mb-4">
-                  <div class="row">
+                  <div class="card-header">
                       <div class="col-lg-12">
-                          <img class="thumbnail img-fluid" src="{% static 'images/product placeholder.png' %}" style="max-width: 80%;" alt="Product Image">
+                          <!--<img class="thumbnail img-fluid" src="{% static 'images/product placeholder.png' %}" style="max-width: 80%;" alt="Product Image">-->
                           <div class="box-element product">
-                              <h6><strong>Genre</strong></h6>
+                              <h6><strong>{{ vendor.genre }}</strong></h6>
                               <hr>
-                              <a class="btn btn-outline-primary add-btn" href="{% url 'products' %}">View Genre</a>
+                              <a class="btn btn-outline-primary add-btn" href="{% url 'products' %}">View Companies</a>
                                <!--<a class="btn btn-outline-success" href="#">View</a>-->
                               
                           </div>
                       </div>
                   </div>
-              </div><br>
+              </div>
+              {% endfor %}
+              <br>
       
-              <div class="col-lg-6 mb-4">
+              <!--<div class="col-lg-6 mb-4">
                   <div class="row">
                       <div class="col-lg-12">
                           <img class="thumbnail img-fluid" src="{% static 'images/product placeholder.png' %}" style="max-width: 80%;" alt="Product Image">
@@ -65,7 +68,7 @@
                               <h6><strong>Genre</strong></h6>
                               <hr>
                               <a class="btn btn-outline-primary add-btn"href="{% url 'products' %}">View Genre</a>
-                               <!--<a class="btn btn-outline-success" href="#">View</a>-->
+                               <a class="btn btn-outline-success" href="#">View</a>
                           </div>
                       </div>
                   </div>
@@ -78,7 +81,7 @@
                            <h6><strong>Genre</strong></h6>
                            <hr>
                            <a class="btn btn-outline-primary add-btn" href="{% url 'products' %}">View Genre</a>
-                               <!--<a class="btn btn-outline-success" href="#">View</a>-->
+                               <a class="btn btn-outline-success" href="#">View</a>
                        </div>
                    </div>
                </div>
@@ -91,7 +94,7 @@
                            <h6><strong>Genre</strong></h6>
                            <hr>
                            <a class="btn btn-outline-primary add-btn" href="{% url 'products' %}">View Genre</a>
-                               <!--<a class="btn btn-outline-success" href="#">View</a>-->
+                               <a class="btn btn-outline-success" href="#">View</a>
                        </div>
                    </div>
                </div>
@@ -104,7 +107,7 @@
                            <h6><strong>Genre</strong></h6>
                            <hr>
                            <a class="btn btn-outline-primary add-btn" href="{% url 'products' %}">View Genre</a>
-                               <!--<a class="btn btn-outline-success" href="#">View</a>-->
+                               <a class="btn btn-outline-success" href="#">View</a>
                        </div>
                    </div>
                </div>
@@ -117,7 +120,7 @@
                            <h6><strong>Genre</strong></h6>
                            <hr>
                            <a class="btn btn-outline-primary add-btn" href="{% url 'products' %}">View Genre</a>
-                               <!--<a class="btn btn-outline-success" href="#">View</a>-->
+                               <a class="btn btn-outline-success" href="#">View</a>-->
                        </div>
                    </div>
                </div>
