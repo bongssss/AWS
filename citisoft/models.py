@@ -5,12 +5,10 @@ from django.contrib.auth.models import User
 
 
 
-class Vendorr(models.Model):
+class Vendor(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200, null=True)
+    vendorName = models.CharField(max_length=200, null=True,default="")
     email = models.CharField(max_length=200)
-    genre= models.CharField(max_length=150, null=True)  # The category of the product 
-    #client =  models.ManyToManyField(Client, related_name='client_product')
     description = models.CharField(max_length=2000, null=True)
     date_est = models.DateField()
     location= models.CharField(max_length=1250, null=True)
@@ -22,11 +20,14 @@ class Vendorr(models.Model):
     client_types=models.CharField(max_length=400, null=True)
     cloud_or_native=models.CharField(max_length=100, null=True)
     added_info=models.CharField(max_length=600, null=True)
+    vendorId = models.AutoField(primary_key=True)
+    password = models.CharField(max_length=200,null=True)
+    website = models.URLField(null=True)
     
  
 
     def __str__(self):
-	    return self.name
+	    return self.vendorName
 
 
 
@@ -34,34 +35,70 @@ class Vendorr(models.Model):
 
 class Client(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200, null=True)
+    fullName = models.CharField(max_length=200, null=True,default="")
     email = models.CharField(max_length=200)
-    saved_vendor = models.ManyToManyField(Vendorr, null=True, blank=True)
+    password = models.CharField(max_length=200,null=True)
    
  
 
     def __str__(self):
-	    return self.name
+	    return self.fullName
 
  
 
-
-
-
-class Saved_vendor(models.Model):
-   # client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200, null=True)
-    #email = models.CharField(max_length=200)
-    #saved_vendor = models.ManyToManyField(Vendorr, null=True, blank=True)
+class Categories(models.Model):
+    categoryName = models.CharField(max_length=200, null=True)
+    categoryId = models.AutoField(primary_key=True)
+    def __str__(self):
+        return self.categoryName
     
+class Country(models.Model):
+    countryName = models.CharField(max_length=200, null=True)
+    countryId = models.AutoField(primary_key=True)
+    def __str__(self):
+        return self.countryName    
 
- 
+class VendorRating(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    review = models.CharField(max_length=200, null=True)
+    rating = models.FloatField(max_length=200)
+    vendorRatingId = models.AutoField(primary_key=True)
 
     def __str__(self):
-	    return self.name
+        return self.vendor.vendorName
+ 
+class VendorCategories(models.Model):
+    category = models.ForeignKey(Categories, on_delete=models.CASCADE)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    vendorCategoriesId = models.AutoField(primary_key=True)
+
+    def __str__(self):
+        return self.vendor.vendorName
 
 
+class SavedVendors(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    savedVendorsId = models.AutoField(primary_key=True)
+
+    def __str__(self):
+        return self.vendor.vendorName
+    
+    
+    
+class SaveOrder(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True, blank=True)
+    saveOrderId = models.CharField(max_length=100, null=True)
+
+    def __str__(self):
+        return str(self.id)
 
  
  
  
+class SaveOrderItem(models.Model):
+    saveorder = models.ForeignKey(SaveOrder, on_delete=models.SET_NULL, null=True)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    
+    

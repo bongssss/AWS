@@ -28,9 +28,9 @@
               <a class="nav-link" href="{% url 'home' %}"> <span class="sr-only">(current)</span></a>
             </li>
             <!--<li class="nav-item">
-              <a class="nav-link" href="#">Log In</a>-->
+              <a class="nav-link" href="#">Log In</a>
             </li>
-            <!--<li class="nav-item dropdown">
+            <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sign Up As
               </a>
@@ -45,7 +45,7 @@
               <a class="nav-link" href="#">Services</a>
             </li>-->          </ul>
           <div class="form-inline my-2 my-lg-0">
-            <a href="#"class="btn btn-primary">Login/Signup</a>
+            <a class="btn btn-primary"href="{% url 'userlogin' %}" >Log In</a>
         </div>
       </nav> {%endblock navigation%}
   
@@ -100,7 +100,7 @@
         <div class="grid-item">
           <!-- Content for rectangular space 2 -->
           <h3>Profile</h3>
-          <p><em>Set Up your profile and go throught our lists of financial Services.</em></p>
+          <p><em>Set Up your profile and go through our lists of  Services.</em></p>
           <a class="btn btn-primary" href="{% url 'usersignup' %}">Get started</a>
         </div>
       </div>
@@ -108,8 +108,8 @@
         <div class="grid-item">
           <!-- Content for rectangular space 3 -->
           <h3>Vendors</h3>
-          <p><em>Take a quick look at our best performing Financial service partners.</em></p>
-          <a class="btn btn-primary" href="#" onclick="toggleServices2()">Our Vendors</a>
+          <p><em>Sign up as one of Our vendors.</em></p>
+          <a class="btn btn-primary" href="vendorsignup" >Vendors</a>
             <p id="vendorsParagraph" style="display: none;">
               Our Esteemed Partners include: IBM watsonX, CloudAttribution, ADDEPAR INC and many more!
                   <!-- Add more services as needed -->
