@@ -250,12 +250,42 @@ def edits(request):   # Request handler
          vendorId = request.session['vendorId'] 
          print("vendorId",vendorId)  
          vendor = Vendor.objects.get(pk=vendorId)
-         
-         context = {'vendor':vendor}   
-         return render(request, 'citisoft/vendor/edits.html', context)
+
+         if request.method == "POST":    
+            email =  request.POST["email"]
+            confirm_email = request.POST["confirm_email"]
+            description = request.POST['description']
+            address = request.POST['address']
+            contact = request.POST['contact_telephone']
+            employees = request.POST['no_of_employees']
+            int_pro_services = request.POST['int_pro_services']
+            client_types = request.POST['client_types']
+            cloud_or_native = request.POST['cloud_or_native']
+            additional_information = request.POST['additional_information']
+            business_areas = request.POST['business_areas']
+            
+            if email == confirm_email:
+               vendor.description=description
+               vendor.address=address
+               vendor.contact_tel=contact
+               vendor.num_of_eployees=employees
+               vendor.Int_pro_services=int_pro_services
+               vendor.client_types=client_types
+               vendor.cloud_or_native=cloud_or_native
+               vendor.added_info=additional_information
+               vendor.business_areas=business_areas
+               vendor.save() 
+               print("vendorId","success") 
+               messages.success(request,"edits")
+            else: 
+               print("vendorId","failed") 
+               messages.warning(request,"emails do not match.")
+         context =  {'vendor':vendor}
       else:
-        return redirect('vendorlogin')
+         print("clientId","Nothing") 
+      return render(request, 'citisoft/vendor/edits.html', context)
    
+      
 
 
 def view(request):   # Request handler
