@@ -71,11 +71,9 @@
         <div class="grid-item">
           <!-- Content for rectangular space 1 -->
           <h3>View Products</h3>
-          {% for v in Vendor %}
           <!--<p><em>Checkout our wide range of investment reccomendation services</em></p>-->
-          <a class="btn btn-primary" href="{% url 'view' vendorId  %}">view products</a>
+          <a class="btn btn-primary" href="{% url 'view' %}">view products</a>
           
-          {% endfor %}
         </div>
       </div>
       <div class="col-12">

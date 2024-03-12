@@ -58,7 +58,7 @@
 
              <tr>
             <th><h5>Date Established: <strong> </strong></h5></th>
-            <th><input style="float:right; margin:5px;"> </input></th>
+            <th>{{vendor.date_est}}</th>
             <th>
                 <a  style="float:right; margin:5px;" class="btn btn-outline-primary" href="{% url 'view' %}">Add</a>
             </th>
@@ -80,7 +80,7 @@
 
              <tr>
             <th><h5>Address: <strong> </strong></h5></th>
-            <th><input style="float:right; margin:5px;"> </input></th>
+            <th><input style="float:right; margin:5px;" value="{{vendor.address}}"> </input></th>
             <th>
                 <a  style="float:right; margin:5px;" class="btn btn-outline-primary" href="{% url 'view' %}">Add</a>
             </th>

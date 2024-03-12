@@ -21,9 +21,30 @@ def index(request):   # Request handler
    return render(request, 'citisoft/user/index.html', context)
 
 # Function-based view for settings page
-def settings(request):   # Request handler
-   context = {}   # Initialize context dictionary
-   # Render settings.html with context
+def settings(request):  
+   if 'clientId'  in request.session:  
+      clientId = request.session['clientId'] 
+      print("clientId",clientId)  
+      client_info = Client.objects.get(pk=clientId)
+      
+      if request.method == "POST":    
+         email =  request.POST["email"]
+         password = request.POST['password']
+         fullname = request.POST['fullname']
+         confirm_password = request.POST['confirm_password']
+         if password == confirm_password:
+            client_info.email=email
+            client_info.fullName=  fullname
+            client_info.password = password
+            client_info.save() 
+            print("clientId","success") 
+            messages.success(request,"Settings")
+         else: 
+            print("clientId","failed") 
+            messages.warning(request,"Passwords do not match.")
+      context =  {'client':client_info}
+   else:
+      print("clientId","Nothing")   
    return render(request, 'citisoft/user/settings.html', context)
 
 # Function-based view for products page
@@ -155,12 +176,13 @@ def userlogin(request):
 
 def usersignup(request):   # Request handler
    countries = Country.objects.all()
-   context = {'countries':countries} 
+   
    if request.method == 'POST':
        email = request.POST["email"]
        password = request.POST['password']
        fullname = request.POST['fullname']
        client = authenticateClientSignIn(email, password, fullname)
+       context = {'countries':countries}
        print("client.id",client.pk)
        if client is not None:
           request.session['clientId'] = client.pk
@@ -175,19 +197,26 @@ def usersignup(request):   # Request handler
 
 
 def vendor_home(request):   # Request handler
-   context = {}   
-   return render(request, 'citisoft/vendor/vendor_home.html', context)
-
+      if 'vendorId'  in request.session:  
+         vendorId = request.session['vendorId'] 
+         print("vendorId",vendorId)  
+         vendor = Vendor.objects.get(pk=vendorId)
+         context = {'vendor':vendor}   
+         return render(request, 'citisoft/vendor/vendor_home.html', context)
+      else:
+        return redirect('vendorlogin')
 
 def vendorsignup(request):   # Request handler
    countries = Country.objects.all()
-   context = {'countries':countries}
+   
    if request.method == 'POST':
        email = request.POST["email"]
        password = request.POST['password']
        name = request.POST['vendorname']
        vendor = authenticateVendorSignIn(email, password, name)
+       context = {'countries':countries}
        print("vendor.vendorId",vendor.pk)
+       
        if vendor is not None:
           request.session['vendorId'] = vendor.pk
           return redirect('vendor_home')
@@ -217,15 +246,29 @@ def vendorlogin(request):   # Request handler
 
 
 def edits(request):   # Request handler
-   context = {}   # Initialize context dictionary
-   # Render vendorlogin.html with context
-   return render(request, 'citisoft/vendor/edits.html', context)
+      if 'vendorId'  in request.session:  
+         vendorId = request.session['vendorId'] 
+         print("vendorId",vendorId)  
+         vendor = Vendor.objects.get(pk=vendorId)
+         
+         context = {'vendor':vendor}   
+         return render(request, 'citisoft/vendor/edits.html', context)
+      else:
+        return redirect('vendorlogin')
+   
 
 
-def view(request, vendorCategoriesId):   # Request handler
-   vendorCategory = VendorCategories.objects.get(vendorCategoriesId=vendorCategoriesId)
-   context = {'vendorCategory': vendorCategory} 
-   return render(request, 'citisoft/vendor/view.html', context)
+def view(request):   # Request handler
+   
+      if 'vendorId'  in request.session:  
+         vendorId = request.session['vendorId'] 
+         print("vendorId",vendorId)  
+         vendor = Vendor.objects.get(pk=vendorId)
+         context = {'vendor':vendor}   
+         return render(request, 'citisoft/vendor/view.html', context)
+      else:
+        return redirect('vendorlogin')
+   
 
 def clientinfo(request):   # Request handler
    context = {}   # Initialize context dictionary
