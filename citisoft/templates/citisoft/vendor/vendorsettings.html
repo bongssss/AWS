@@ -1,28 +1,99 @@
 {% extends 'citisoft/user/index.html' %}
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-blue bg-dark"> {%block navigation%}
-    <a class="navbar-brand" href="{% url 'home' %}">Citisoft</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
-        <ul class="navbar-nav">
+     <a class="navbar-brand" href="{% url 'home' %}">Citisoft</a>
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+     </button>
+ 
+      <!-- Hamburger menu -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
                 <a class="nav-link" href="#">Welcome, {{ user.username }}</a>
             </li>
         </ul>
-        
-        <div class="form-inline">
-            {% if user.is_authenticated %}
-            <a href="{% url 'vendorlogout' %}" class="btn btn-primary">Logout</a>
+          
+        <div class="form-inline my-2 my-lg-0">
+            {% if request.session.clientId %}
+            <a href="{% url 'logout' %}" class="btn btn-primary mr-2">Logout</a>
             {% else %}
-            <a href="{% url 'vendorlogin' %}" class="btn btn-primary">Login</a>
-            <!--<a href="{% url 'vendorsignup' %}" class="btn btn-secondary">Signup</a>-->
+            <a href="{% url 'userlogin' %}" class="btn btn-primary mr-2">Login</a>
+            <!--<a href="{% url 'usersignup' %}" class="btn btn-secondary">Signup</a>-->
             {% endif %}
+
+            <!-- Hamburger menu right beside the logout button -->
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    ☰ <!-- Hamburger icon -->
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{% url 'home' %}">Home</a>
+                    <a class="dropdown-item" href="{% url 'delete' %}" onclick="confirmDelete()">Delete Account</a>
+                </div>
+            </div>
         </div>
     </div>
-</nav>{%endblock navigation%}
+ </nav>{%endblock navigation%}
 {% block content %}
-     <h3>Vendor Settings page</h3>
-{% endblock content %} 
+     <h3> Vendor Settings</h3>
+     <main class="form-signin w-100 m-auto">
+        <div class="container">
+             <div class="row justify-content-center">
+                 <div class="col-md-6">
+                     <form>
+
+                        <div class="form-floating">
+                            <label for="firstName">Full Name</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="First Name">
+                        </div>
+                        
+                       
+                        <br>
+                         <div class="form-floating mb-3">
+                            <label for="floatingInput">Change Email address</label>
+                             <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                             
+                         </div>
+                         <div class="form-floating mb-3">
+                            <label for="floatingInput">Confirm New Email address</label>
+                             <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                             
+                         </div>
+
+                         <div class="form-floating mb-3">
+                            <label for="floatingPassword">New Password</label>
+                             <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                             
+                         </div>
+                         <div class="form-floating mb-3">
+                            <label for="floatingPassword">Confirm New Password</label>
+                             <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                             
+                         </div>
+                 
+                          <!--<div class="form-check text-start mb-3">
+                             <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+                             <label class="form-check-label" for="flexCheckDefault">
+                                 Are you sure you want to delete your accoount?
+                             </label>
+                         </div>-->
+                 
+                         <th>
+                            <a class="btn btn-primary btn-lg mb-2" href="{% url 'home' %}"type="submit">Save Changes</a>
+                            </th>
+                            <th>
+                                <a class="btn btn-outline-danger btn-lg mb-2"  style="float:right; margin:5px;"  href="{% url 'home' %}">Cancel</a>
+                           </th>
+                         <!--<div class="mt-5 text-body-secondary">
+                             <p class="d-inline mr-4">Are you a Vendor? <a href="{% url 'vendorlogin' %}">Login here</a></p>
+                             <br>
+                             <p class="d-inline">Is this a new account? <a href="{% url 'usersignup' %}">Signup here</a></p>
+                         </div>-->
+                     </form>
+                 </div>
+             </div>
+         </div>
+         
+      </main>  
+{% endblock content %}
