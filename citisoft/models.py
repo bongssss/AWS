@@ -10,7 +10,7 @@ class Vendor(models.Model):
     vendorName = models.CharField(max_length=200, null=True,default="")
     email = models.CharField(max_length=200)
     description = models.CharField(max_length=2000, null=True)
-    date_est = models.DateField()
+    date_est = models.DateTimeField(auto_now_add=True)
     location= models.CharField(max_length=1250, null=True)
     address =  models.CharField(max_length=3000, null=True)
     contact_tel = models.CharField(max_length=2500, null=True)
@@ -30,13 +30,18 @@ class Vendor(models.Model):
 	    return self.vendorName
 
 
-
+class Country(models.Model):
+    countryName = models.CharField(max_length=200, null=True)
+    countryId = models.AutoField(primary_key=True)
+    def __str__(self):
+        return self.countryName 
 
 
 class Client(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     fullName = models.CharField(max_length=200, null=True,default="")
     email = models.CharField(max_length=200)
+    country = models.ForeignKey(Country,on_delete=models.SET_NULL,null=True)
     password = models.CharField(max_length=200,null=True)
    
  
@@ -52,11 +57,7 @@ class Categories(models.Model):
     def __str__(self):
         return self.categoryName
     
-class Country(models.Model):
-    countryName = models.CharField(max_length=200, null=True)
-    countryId = models.AutoField(primary_key=True)
-    def __str__(self):
-        return self.countryName    
+   
 
 class VendorRating(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)

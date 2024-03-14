@@ -37,7 +37,7 @@
                        <br>
                        <div class="form-floating">
                            <label for="lastName">Full Name</label>
-                           <input type="text" class="form-control" name="fullname" id="lastName" placeholder="Last Name..">
+                           <input type="text" class="form-control" name="fullname" id="lastName" placeholder="Name..">
                        </div>
                        <br>
                        <div class="form-floating">
@@ -46,10 +46,10 @@
                            <div id="emailError" class="text-danger"></div>
                        </div>
                        <br>
-                       <select class="form-select" id="countrySelect">
+                       <select class="form-select" id="countrySelect" name="countrySelect">
                         <option selected disabled>Country</option>
                         {% for country in countries%}
-                        <option value="{country.countryId}">{{country.countryName}}</option>
+                        <option value="{{country.countryId}}">{{country.countryName}}</option>
                         {% endfor %}
                        </select>
                        <div id="countrySelectError" class="text-danger"></div>
@@ -62,7 +62,7 @@
                        <br>
                        <div class="form-floating">
                            <label for="confirmPassword">Confirm Password</label>
-                           <input type="password" class="form-control" name="password" id="confirmPassword" placeholder="Confirm Password">
+                           <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
                            <div id="confirmPasswordError" class="text-danger"></div>
                        </div>
                        <br>

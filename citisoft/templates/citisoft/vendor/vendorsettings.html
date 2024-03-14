@@ -6,16 +6,18 @@
          <span class="navbar-toggler-icon"></span>
      </button>
  
-      <!-- Hamburger menu -->
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+       <!-- Hamburger menu -->
+       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Welcome, {{ user.username }}</a>
-            </li>
+                {% if vendor %}
+                  <a class="nav-link" href="#">Welcome, {{ vendor.vendorName }}</a>
+                 {%endif%} 
+              </li>
         </ul>
           
         <div class="form-inline my-2 my-lg-0">
-            {% if request.session.clientId %}
+            {% if request.session.vendorId %}
             <a href="{% url 'logout' %}" class="btn btn-primary mr-2">Logout</a>
             {% else %}
             <a href="{% url 'userlogin' %}" class="btn btn-primary mr-2">Login</a>
@@ -28,8 +30,8 @@
                     ☰ <!-- Hamburger icon -->
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{% url 'home' %}">Home</a>
-                    <a class="dropdown-item" href="{% url 'delete' %}" onclick="confirmDelete()">Delete Account</a>
+                    <a class="dropdown-item" href="{% url 'vendor_home' %}">Home</a>
+                    <a class="dropdown-item" href="{% url 'vendordelete' %}" >Delete Account</a>
                 </div>
             </div>
         </div>
@@ -41,55 +43,43 @@
         <div class="container">
              <div class="row justify-content-center">
                  <div class="col-md-6">
-                     <form>
+                     <form method='POST'>
+                          {% csrf_token %}
 
                         <div class="form-floating">
-                            <label for="firstName">Full Name</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="First Name">
+                            <label for="firstName">Company Name</label>
+                            <input type="text" class="form-control" name='vendorname' id="firstName" placeholder="First Name">
                         </div>
                         
                        
                         <br>
                          <div class="form-floating mb-3">
-                            <label for="floatingInput">Change Email address</label>
-                             <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput"> Email address</label>
+                             <input type="email" class="form-control" name='email' id="floatingInput" placeholder="name@example.com">
                              
                          </div>
-                         <div class="form-floating mb-3">
-                            <label for="floatingInput">Confirm New Email address</label>
-                             <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                             
-                         </div>
+                        
 
                          <div class="form-floating mb-3">
                             <label for="floatingPassword">New Password</label>
-                             <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                             <input type="password" name='password' class="form-control" id="floatingPassword" placeholder="Password">
                              
                          </div>
                          <div class="form-floating mb-3">
                             <label for="floatingPassword">Confirm New Password</label>
-                             <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                             <input type="password" class="form-control"name='confirm_password' id="floatingPassword" placeholder="Password">
                              
                          </div>
                  
-                          <!--<div class="form-check text-start mb-3">
-                             <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-                             <label class="form-check-label" for="flexCheckDefault">
-                                 Are you sure you want to delete your accoount?
-                             </label>
-                         </div>-->
+                          
                  
                          <th>
-                            <a class="btn btn-primary btn-lg mb-2" href="{% url 'home' %}"type="submit">Save Changes</a>
+                            <a class="btn btn-primary btn-lg mb-2" type="submit">Save Changes</a>
                             </th>
                             <th>
-                                <a class="btn btn-outline-danger btn-lg mb-2"  style="float:right; margin:5px;"  href="{% url 'home' %}">Cancel</a>
+                                <a class="btn btn-outline-danger btn-lg mb-2"  style="float:right; margin:5px;"  href="{% url 'vendor_home' %}">Cancel</a>
                            </th>
-                         <!--<div class="mt-5 text-body-secondary">
-                             <p class="d-inline mr-4">Are you a Vendor? <a href="{% url 'vendorlogin' %}">Login here</a></p>
-                             <br>
-                             <p class="d-inline">Is this a new account? <a href="{% url 'usersignup' %}">Signup here</a></p>
-                         </div>-->
+                         
                      </form>
                  </div>
              </div>

@@ -17,7 +17,7 @@
         </ul>
           
         <div class="form-inline my-2 my-lg-0">
-            {% if request.session.clientId %}
+            {% if request.session.vendorId %}
             <a href="{% url 'logout' %}" class="btn btn-primary mr-2">Logout</a>
             {% else %}
             <a href="{% url 'userlogin' %}" class="btn btn-primary mr-2">Login</a>
@@ -30,8 +30,8 @@
                     ☰ <!-- Hamburger icon -->
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{% url 'home' %}">Home</a>
-                    <a class="dropdown-item" href="{% url 'settings' %}">Settings</a>
+                    <a class="dropdown-item" href="{% url 'vendor_home' %}">Home</a>
+                    <a class="dropdown-item" href="{% url 'vendorsettings' %}">Settings</a>
                     
                 </div>
             </div>
@@ -59,7 +59,7 @@
                             <button class="btn btn-primary btn-lg mb-2" type="submit">Delete</button>
                        </th>
                             <th>
-                                 <a class="btn btn-outline-danger btn-lg mb-2" type="button" style="float:right; margin:5px;"   href="{% url 'home' %}">Cancel</a>
+                                 <a class="btn btn-outline-danger btn-lg mb-2" type="button" style="float:right; margin:5px;"   href="{% url 'vendor_home' %}">Cancel</a>
                             </th>
                  
                          
