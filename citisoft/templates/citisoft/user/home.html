@@ -10,9 +10,7 @@
      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                {%if client%}
-                <a class="nav-link" href="#">Welcome, {{ Client.fullName }}</a>
-                {%endif%}
+                <a class="nav-link" href="#">Welcome, {{ user.username }}</a>
             </li>
         </ul>
           
@@ -38,7 +36,7 @@
     </div>
 </nav>{%endblock navigation%}
 {% block content %}
-     <h3>At citisoft, you can Invest with different a wide veraity of companies!</h3>
+     <h3>At citisoft, you can Invest with different a wide variety of companies!</h3>
      <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-lg-6 mb-4">
