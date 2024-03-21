@@ -37,13 +37,22 @@
     </div>
 </nav>{%endblock navigation%}
 {% block content %}
+
+	{% if request.session.clientId %}
+	<form method='POST' action ="{% url 'cart' %}">
+		{% csrf_token %}
+	<button class="btn btn-primary mr-2" type="submit">Save</button>
+	</form>
+	<!--<a href="{% url 'usersignup' %}" class="btn btn-secondary">Signup</a>-->
+	{% endif %}
      <h3>Saved Vendors</h3>
+	 
      <div class="row">
-		{% for item in items%}
+		{% for vendor in vendors%}
 		<div class="col-lg-12">
 			<div class="box-element">
 
-				<a  class="btn btn-outline-primary" href="{% url 'products' item.vendor.vendorId %}">&#x2190; Back</a>
+				
 
 				<br>
 				<br>
@@ -52,13 +61,13 @@
 					<tr>
 						
 						
-						<th><h3>Company Name: <strong>{{ item.vendor.vendorName }} </strong></h3></th>
+						<th><h3>Company Name: <strong>{{ vendor.vendorName }} </strong></h3></th>
 						<!--<th><h5>Genre:<strong>{{ company.genre }} </strong></h5></th>-->
 						<th>
-							<a  style="float:right; margin:5px;" class="btn btn-outline-primary" href="{% url 'products' item.vendor.vendorId %}">View</a>
+							<a  style="float:right; margin:5px;" class="btn btn-outline-primary" href="{% url 'products' vendor.vendorId %}">View</a>
 						</th>
                               <th>
-							<a  style="float:right; margin:5px;" class="btn btn-outline-danger" href="{% url 'cart' item.vendor.vendorId %}">Delete</a>
+							<a  style="float:right; margin:5px;" class="btn btn-outline-danger" href="{% url 'cart' %}">Delete</a>
 						</th>
 						
 						

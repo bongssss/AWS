@@ -1,7 +1,7 @@
 {% extends 'citisoft/user/index.html' %}
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-blue bg-dark"> {%block navigation%}
-	<a class="navbar-brand" href="{% url 'home' %}">Citisoft</a>
+	<a class="navbar-brand" href="{% url 'home' %}">Citisoft({{ request.session.cart|length }})</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
@@ -67,8 +67,9 @@
 						<th>
 							<!--<a  style="float:right; margin:5px;" class="btn btn-outline-primary" href="{% url 'choice' vendorCategory.vendor.vendorId %}">Save</a>-->
 						</th>
+						
 						<th>
-							<a href="{% url 'cart' vendorCategory.vendor.vendorId %}" style="float:right; margin:5px;" class="btn btn-outline-primary">View Saved Vendors</a>
+							<button data-vendor='{{vendorCategory.vendor.vendorId}}' style="float:right; margin:5px;" data-action='add' class="btn btn-outline-primary  save-vendor">Add Vendor to Saved</button>
 
 						</th>
 						<th>
@@ -105,5 +106,5 @@
 		</div>
 	</div>
 	{% endif %}
-      
+      <script src="{%static 'js/cart.js'%}"></script>
 {% endblock content %}

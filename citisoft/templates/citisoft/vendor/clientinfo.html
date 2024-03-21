@@ -48,35 +48,14 @@
 				<br>
 				<br>
 				<table class="table">
+                    {% for client in clients%}
 					<tr>
-						<th><h5>Client name: <strong>{{ user_name }} </strong></h5></th>
+						<th><h5>Client name: <strong>{{ client.fullName }} </strong></h5></th>
 						
 					</tr>
+                    {% endfor%}
 
-                         <tr>
-                            <th><h5>Client name: <strong>{{ user_name }} </strong></h5></th>
-                            
-					</tr>
-
-                         <tr>
-                            <th><h5>Client name: <strong>{{ user_name }} </strong></h5></th>
-                           
-					</tr>
-
-                         <tr>
-                            <th><h5>Client name: <strong>{{ user_name }} </strong></h5></th>
-                            
-					</tr>
-
-                         <tr>
-                            <th><h5>Client name: <strong>{{ user_name }} </strong></h5></th>
-                            
-					</tr>
-
-                         <tr>
-                            <th><h5>Client name: <strong>{{ user_name }} </strong></h5></th>
-                            
-					</tr>
+                    
 				</table>
 
 			</div>

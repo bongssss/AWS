@@ -9,7 +9,8 @@ from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import Paragraph
 from django.contrib import messages
-
+import json
+from django.http import JsonResponse
 #import weasyprint
 #from weasyprint import HTML
 
@@ -102,18 +103,41 @@ def cartOperation(request, vendor_id):
    
    return redirect('choice', company) 
 
-def cart(request, vendor_id):   # Request handler
-      vendor_id= Vendor.vendorId
-      if request.user.is_authenticated:
-         client = request.user.client
-         saveorder, created = SaveOrder.objects.get_or_create(client=client)
-         items = saveorder.saveorderitem_set.all()
-      else:
-         #Create empty cart for now for non-logged in user
-         items = []
-      context = {'items':items} 
+def cart(request):   # Request handler
+     vendors = []
+     if 'cart' in request.session:
+        carts = request.session['cart']
+        for cart in carts:
+          print(cart)
+          vendor =  Vendor.objects.get(pk=int(cart))
+          vendors.append(vendor)
+          if request.method == "POST" and 'clientId' in request.session:
+             clientId = request.session['clientId']
+             client = Client.objects.get(pk=clientId)
+             for vendor in vendors:
+                SavedVendors.objects.create(vendor=vendor, client=client,savedVendorsId=vendor.vendorId)
+                
+             del request.session['cart']
+             return redirect('home')
+          else:
+            return render(request, 'citisoft/user/cart.html', {"vendors":vendors})
+     else:
+       return render(request, 'citisoft/user/cart.html', {"vendors":vendors}) 
+   
+   
       
-      return render(request, 'citisoft/user/cart.html', context)
+def clientinfo(request):
+    clients = []
+    vendorId = request.session['vendorId']    
+    savedVendors = SavedVendors.objects.all()
+    for savedVendor in savedVendors:
+       if savedVendor.vendor.vendorId == vendorId:
+          clients.append(savedVendor.client)
+          
+    return render(request,'citisoft/vendor/clientinfo.html',{"clients":clients})
+          
+          
+    
 
 
 
@@ -359,16 +383,7 @@ def view(request):   # Request handler
         return redirect('vendorlogin')
    
 
-def clientinfo(request):   # Request handler
-   if 'vendorId'  in request.session:  
-         vendorId = request.session['vendorId'] 
-   vendor = Vendor.objects.get(pk=vendorId)
-   context = {'vendor':vendor}
-   return render(request, 'citisoft/vendor/clientinfo.html', context)
 
-
-
-   return render(request, 'citisoft/vendor/vendorsettings.html', context)
 
 
 def vendorlogout(request):   # Request handler
@@ -427,7 +442,29 @@ def authenticateVendorSignIn(email,password):
       return None
    
 
-
+def update_cart(request):
+   print("ubon")
+   request.session.modified = True
+   data = json.loads(request.body)
+   print('data', data)
+   vendor_id = data['vendorId']
+   vendor= Vendor.objects.get(pk=vendor_id)
+   action =data['action']
+   print('Action', action)
+   print('vendor', vendor)
+   cart =request.session.get('cart', {})  # get the cart dictionary from session or set it to an empty dict
+   saved_item= cart.get(vendor.vendorId, {'amount':0})
+   if action == 'add':
+      saved_item['amount'] +=1
+   elif action =='remove':
+      saved_item['amount'] -=1
+   cart[vendor.vendorId] =saved_item
+   request.session['cart'] = cart
+   if  saved_item['amount'] <= 0:
+      del request.session['cart'][vendor.vendorId]
+      del request.session['cart'][str(vendor.vendorId)]
+      print('cart'.request.session['cart'])
+   return JsonResponse('Added sucessfully', safe=False)
 
 
 def saveVendor(request, vendor_id):
