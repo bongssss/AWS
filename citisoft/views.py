@@ -220,6 +220,9 @@ def userlogin(request):
    else:
      return render(request, 'citisoft/user/userlogin.html')  
        
+     
+          
+          
        
        
 
@@ -429,7 +432,24 @@ def authenticateVendorSignIn(email,password):
 
 
 
-
 def saveVendor(request, vendor_id):
     # Retrieve the vendor object from the database
     company = get_object_or_404(Vendor, vendorId=vendor_id)
+    
+    
+def searchForm(request):
+ if request.method == 'POST':
+    form = request.POST["search_query"]
+    if form.is_valid():
+      search_query = form.cleaned_data['searc_query']
+      # Perform search in the "vendor" field
+      matching_vendors = Vendor.objects.filter(vendor__icontains=search_query)
+      if matching_vendors.exists():
+        # Display vendor information
+        return render(request, 'products', {'vendors': matching_vendors})
+      else:
+        # No matching vendor found
+        return render(request, 'products', {'message': 'No matching vendor found. Please try again.'})
+ else:
+       form = request.POST["search_query"]
+ return render(request, 'home', {'form': form})
