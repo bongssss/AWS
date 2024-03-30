@@ -1,7 +1,7 @@
 {% extends 'citisoft/user/index.html' %}
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-blue bg-dark"> {%block navigation%}
-	<a class="navbar-brand" href="{% url 'home' %}">Citisoft</a>
+	<a class="navbar-brand" href="{% url 'home' %}">Citisoft({{ request.session.cart|length }})</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
@@ -30,7 +30,8 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 					<a class="dropdown-item" href="{% url 'home' %}">Home</a>
                     <a class="dropdown-item" href="settings">Settings</a>
-                    <a class="dropdown-item" href="{% url 'delete' %}" onclick="confirmDelete()">Delete Account</a>
+                    <a class="dropdown-item" href="{% url 'delete' %}" >Delete Account</a>
+					<a class="dropdown-item" href="{% url 'cart' %}">Cart</a>
                 </div>
             </div>
         </div>
@@ -41,12 +42,13 @@
      <div class="container mt-4">
           <div class="row justify-content-center">
               <div class="col-lg-6 mb-4">
-                  <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Search for...">
-                      <div class="input-group-append">
-                          <button class="btn btn-outline-primary" type="button">Search</button>
-                      </div>
-                  </div>
+				<form method='POST' class="input-group">
+                    {% csrf_token %}
+                    <input name='search_query' type="text" class="form-control" placeholder="Search...">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="submit">Search</button>
+                    </div>
+                </form>
               </div>
           </div>
       </div>
@@ -67,8 +69,9 @@
 						<th>
 							<!--<a  style="float:right; margin:5px;" class="btn btn-outline-primary" href="{% url 'choice' vendorCategory.vendor.vendorId %}">Save</a>-->
 						</th>
+						
 						<th>
-							<a href="{% url 'cart' vendorCategory.vendor.vendorId %}" style="float:right; margin:5px;" class="btn btn-outline-primary">View Saved Vendors</a>
+							<button data-vendor='{{vendorCategory.vendor.vendorId}}' style="float:right; margin:5px;" data-action='add' class="btn btn-outline-primary  save-vendor">Add Vendor to Saved</button>
 
 						</th>
 						<th>
@@ -105,5 +108,5 @@
 		</div>
 	</div>
 	{% endif %}
-      
+      <script src="{%static 'js/cart.js'%}"></script>
 {% endblock content %}
