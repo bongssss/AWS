@@ -474,19 +474,44 @@ def saveVendor(request, vendor_id):
     company = get_object_or_404(Vendor, vendorId=vendor_id)
     
     
-def searchForm(request):
- if request.method == 'POST':
-    form = request.POST["search_query"]
-    if form.is_valid():
-      search_query = form.cleaned_data['searc_query']
+def searchForm(request, vendorName=None):
+   #vendor = get_object_or_404(Vendor, vendorName=vendorName)
+   vendors = Vendor.objects.all()
+   #category = Categories.objects.get(categoryId=categoryId)
+   #vendorCategories = VendorCategories.objects.filter(category=category)
+   context = {'categories': vendors} 
+   if request.method == 'POST': 
+      search = request.POST['search_query']
+     
       # Perform search in the "vendor" field
-      matching_vendors = Vendor.objects.filter(vendor__icontains=search_query)
-      if matching_vendors.exists():
-        # Display vendor information
-        return render(request, 'products', {'vendors': matching_vendors})
+      matching_vendor = authSearch(search)
+      print("vendor.vendorId", matching_vendor.vendorName)
+      if matching_vendor is not None:
+         return redirect( 'product',vendorName=matching_vendor.vendorName)
       else:
-        # No matching vendor found
-        return render(request, 'products', {'message': 'No matching vendor found. Please try again.'})
- else:
-       form = request.POST["search_query"]
- return render(request, 'home', {'form': form})
+          messages.error(request,"vendor does not exist, try again")
+      return render(request, 'citisoft/user/product.html', context)
+   else:
+      return render(request, 'citisoft/user/product.html', context)
+   
+   
+   
+   
+   
+   
+def authSearch(search_query):
+   try:
+     vendor = Vendor.objects.get(vendorName=search_query) 
+     if vendor.vendorName == search_query:
+        return vendor
+   except vendor.DoesNotExist:
+      return None
+
+
+def product(request,vendorName):   # Request handler
+   print("categoryId",vendorName)
+   category = Vendor.objects.get(vendorName=vendorName)
+   vendorCategories = Vendor.objects.filter(vendorName=category)
+   print("vendorCategories",vendorCategories)
+   context = {'vendorCategories': category}  
+   return render(request, 'citisoft/user/choice.html', context)

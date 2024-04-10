@@ -24,5 +24,20 @@
      </div>
  </nav>{%endblock navigation%}
 {% block content %}
-     <h3>Individual Financial Service pdf</h3>
+
+<h3>At citisoft, you can Invest with different a wide variety of companies!</h3>
+<div class="container mt-4">
+    {% for vendor in vendors%}
+   <div class="row justify-content-center">
+       <div class="col-lg-6 mb-4">
+           <form  method='POST' class="input-group">
+               {% csrf_token %}
+               <input name='search_query' type="text" class="form-control" placeholder="Search...">
+               <div class="input-group-append">
+                   <button class="btn btn-outline-primary" type="submit" href="{% url 'product' vendor.vendorId %}">Search</button>
+               </div>
+           </form>
+       </div>
+   </div>
+   {% endfor %}
 {% endblock content %}
