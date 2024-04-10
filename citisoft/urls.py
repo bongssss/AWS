@@ -6,8 +6,8 @@ urlpatterns = [
 	path('', views.index, name="index"),
     path('home/', views.home, name="home"),
     path('products/<int:categoryId>', views.products, name="products"),
-    path('product/', views.searchForm, name='product'),  # URL without categoryId
-    path('product/<str:vendorName>/', views.product, name='product'),
+   # path('product/', views.searchForm, name='product'),  # URL without categoryId
+    #path('product/<str:vendorId>/', views.product, name='product'),
 	path('cart/', views.cart, name="cart"),
     path('update_cart/', views.update_cart, name="update_cart"),
     path('cartOperation/<int:vendor_id>', views.cartOperation, name='cartOperation'),
@@ -27,6 +27,8 @@ urlpatterns = [
     path('clientinfo/', views.clientinfo, name="clientinfo"),
     path('logout/', views.logout, name="logout"),
     path('vendorlogout/', views.vendorlogout, name="vendorlogout"),
-    path('category/', views.searchForm, name='category'),
+    path('category/', views.cat, name='category'),
+    path('search/', views.search_vendors, name='search_vendors'),
+    path('vendor/<int:vendorId>/', views.vendor_info, name='vendor_info'),
  
 ]
