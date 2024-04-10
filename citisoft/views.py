@@ -474,7 +474,7 @@ def saveVendor(request, vendor_id):
     company = get_object_or_404(Vendor, vendorId=vendor_id)
     
     
-def searchForm(request, vendorName=None):
+def search_Form(request, vendorName=None):
    #vendor = get_object_or_404(Vendor, vendorName=vendorName)
    vendors = Vendor.objects.all()
    #category = Categories.objects.get(categoryId=categoryId)
@@ -515,3 +515,24 @@ def product(request,vendorName):   # Request handler
    print("vendorCategories",vendorCategories)
    context = {'vendorCategories': category}  
    return render(request, 'citisoft/user/choice.html', context)
+
+def cat(request):   # Request handler
+   context = {}   # Initialize context dictionary
+   # Render index.html with context
+   
+   return render(request, 'citisoft/user/category.html', context)
+
+
+def search_vendors(request):
+    if request.method == 'POST':
+        search_query = request.POST.get('search_query')
+        if search_query:
+            vendors = Vendor.objects.filter(vendorName__icontains=search_query)
+            return render(request, 'citisoft/user/search_results.html', {'vendors': vendors})
+    return redirect('category')
+ 
+ 
+ 
+def vendor_info(request, vendorId):
+    vendor = Vendor.objects.get(vendorId=vendorId)
+    return render(request, 'citisoft/user/vendor_info.html', {'vendor': vendor})
