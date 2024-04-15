@@ -9,7 +9,8 @@ from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import Paragraph
 from django.contrib import messages
-
+import json
+from django.http import JsonResponse
 #import weasyprint
 #from weasyprint import HTML
 
@@ -46,6 +47,33 @@ def settings(request):
    else:
       print("clientId","Nothing")   
    return render(request, 'citisoft/user/settings.html', context)
+
+
+def vendorSettings(request):  
+   if 'vendorId'  in request.session:  
+      vendorId = request.session['vendorId'] 
+      print("vendorId",vendorId)  
+      vendor_info = Vendor.objects.get(pk=vendorId)
+      
+      if request.method == "POST":    
+         email =  request.POST["email"]
+         password = request.POST['password']
+         vendorname = request.POST['vendorname']
+         confirm_password = request.POST['confirm_password']
+         if password == confirm_password:
+            vendor_info.email=email
+            vendor_info.vendorName=  vendorname
+            vendor_info.password = password
+            vendor_info.save() 
+            print("clientId","success") 
+            messages.success(request,"Settings")
+         else: 
+            print("clientId","failed") 
+            messages.warning(request,"Passwords do not match.")
+      context =  {'client':vendor_info}
+   else:
+      print("clientId","Nothing")   
+   return render(request, 'citisoft/vendor/vendorsettings.html')
 
 # Function-based view for products page
 def products(request,categoryId):   # Request handler
@@ -171,9 +199,33 @@ def pdf_view(request, vendor_id):
 
 
 def delete(request):   # Request handler
-   context = {}   # Initialize context dictionary
-   # Render delete.html with context
+   context = {}
+   if request.method == 'POST':
+      if 'clientId' in request.session:
+         clientId =  request.session['clientId']
+         client = Client.objects.get(pk=clientId)
+         client.delete()
+         return redirect('index')
+      else:
+               # Neither client nor vendor found with provided credentials
+               return HttpResponse("Invalid email or password.")
+            
    return render(request, 'citisoft/user/delete.html', context)
+
+
+def deleteVendor(request):   # Request handler
+   context = {}
+   if request.method == 'POST':
+      if 'vendorId' in request.session:
+         vendorId =  request.session['vendorId']
+         vendor = Vendor.objects.get(pk=vendorId)
+         vendor.delete()
+         return redirect('index')
+      else:
+               # Neither client nor vendor found with provided credentials
+               return HttpResponse("Invalid email or password.")
+            
+   return render(request, 'citisoft/vendor/vendordelete.html', context)
 
 
 def userlogin(request):
@@ -192,6 +244,9 @@ def userlogin(request):
    else:
      return render(request, 'citisoft/user/userlogin.html')  
        
+     
+          
+          
        
        
 
@@ -199,24 +254,30 @@ def userlogin(request):
 
 def usersignup(request):   # Request handler
    countries = Country.objects.all()
-   
+   context = {'countries':countries}
    if request.method == 'POST':
+       print("signup1")
        email = request.POST["email"]
        password = request.POST['password']
-       fullname = request.POST['fullname']
-       client = authenticateClientSignIn(email, password, fullname)
-       context = {'countries':countries}
-       print("client.id",client.pk)
+       confirmPassword = request.POST['confirmPassword']
+       name = request.POST['fullname']
+       countrySelect = request.POST['countrySelect']
+       country = Country.objects.get(pk=int(countrySelect))
+       
+       Client.objects.create(email=email, password=password, fullName=name,country=country)
+       client = authenticateClientSignIn(email, password,confirmPassword)
+       print("client.clientId",client.pk)
        if client is not None:
+          print("signup2")
           request.session['clientId'] = client.pk
           return redirect('home')
        else:
+          print("signup3")
           messages.error(request,"Invalid Email or Password")
        return render(request, 'citisoft/user/usersignup.html')
     
    else:
-    
-    return render(request, 'citisoft/user/usersignup.html', context)
+      return render(request, 'citisoft/user/usersignup.html', context)
 
 
 def vendor_home(request):   # Request handler
@@ -231,21 +292,23 @@ def vendor_home(request):   # Request handler
 
 def vendorsignup(request):   # Request handler
    countries = Country.objects.all()
-   
+   context = {'countries':countries}
    if request.method == 'POST':
+       print("signup1")
        email = request.POST["email"]
        password = request.POST['password']
        name = request.POST['vendorname']
-       vendor = authenticateVendorSignIn(email, password, name)
-       context = {'countries':countries}
+       Vendor.objects.create(email=email, password=password, vendorName=name)
+       vendor = authenticateVendorSignIn(email, password)
        print("vendor.vendorId",vendor.pk)
-       
        if vendor is not None:
+          print("signup2")
           request.session['vendorId'] = vendor.pk
           return redirect('vendor_home')
        else:
+          print("signup3")
           messages.error(request,"Invalid Email or Password")
-       return render(request, 'citisoft/user/usersignup.html')
+       return render(request, 'citisoft/vendor/vendorsignup.html')
     
    else:
       return render(request, 'citisoft/vendor/vendorsignup.html', context)
@@ -323,16 +386,7 @@ def view(request):   # Request handler
         return redirect('vendorlogin')
    
 
-def clientinfo(request):   # Request handler
-   context = {}   # Initialize context dictionary
-   # Render clientinfo.html with context
-   return render(request, 'citisoft/vendor/clientinfo.html', context)
 
-
-def vendorsettings(request):   # Request handler
-   context = {}   # Initialize context dictionary
-   # Render vendorsettings.html with context
-   return render(request, 'citisoft/vendor/vendorsettings.html', context)
 
 
 def vendorlogout(request):   # Request handler
@@ -363,10 +417,10 @@ def authenticateClient(email,password):
       return None
    
    
-def authenticateClientSignIn(email,password, fullname):
+def authenticateClientSignIn(email,password,confirmPassword):
    try:
       client = Client.objects.get(email=email)
-      if client.password == password and  client.fullName == fullname:
+      if client.password == password and password == confirmPassword:
          return client
    except Client.DoesNotExist:
       return None
@@ -382,10 +436,103 @@ def authenticateVendor(email,password):
          
          
          
-def authenticateVendorSignIn(email,password, name):
+def authenticateVendorSignIn(email,password):
    try:
       vendor = Vendor.objects.get(email=email)
-      if vendor.password == password and  vendor.vendorName == name:
+      if vendor.password == password :
          return vendor
-   except Client.DoesNotExist:
+   except Vendor.DoesNotExist:
       return None
+   
+
+def update_cart(request):
+   print("ubon")
+   request.session.modified = True
+   data = json.loads(request.body)
+   print('data', data)
+   vendor_id = data['vendorId']
+   vendor= Vendor.objects.get(pk=vendor_id)
+   action =data['action']
+   print('Action', action)
+   print('vendor', vendor)
+   cart =request.session.get('cart', {})  # get the cart dictionary from session or set it to an empty dict
+   saved_item= cart.get(vendor.vendorId, {'amount':0})
+   if action == 'add':
+      saved_item['amount'] +=1
+   elif action =='remove':
+      saved_item['amount'] -=1
+   cart[vendor.vendorId] =saved_item
+   request.session['cart'] = cart
+   if  saved_item['amount'] <= 0:
+      del request.session['cart'][vendor.vendorId]
+      del request.session['cart'][str(vendor.vendorId)]
+      print('cart'.request.session['cart'])
+   return JsonResponse('Added sucessfully', safe=False)
+
+def saveVendor(request, vendor_id):
+    # Retrieve the vendor object from the database
+    company = get_object_or_404(Vendor, vendorId=vendor_id)
+    
+    
+def search_Form(request, vendorName=None):
+   #vendor = get_object_or_404(Vendor, vendorName=vendorName)
+   vendors = Vendor.objects.all()
+   #category = Categories.objects.get(categoryId=categoryId)
+   #vendorCategories = VendorCategories.objects.filter(category=category)
+   context = {'categories': vendors} 
+   if request.method == 'POST': 
+      search = request.POST['search_query']
+     
+      # Perform search in the "vendor" field
+      matching_vendor = authSearch(search)
+      print("vendor.vendorId", matching_vendor.vendorName)
+      if matching_vendor is not None:
+         return redirect( 'product',vendorName=matching_vendor.vendorName)
+      else:
+          messages.error(request,"vendor does not exist, try again")
+      return render(request, 'citisoft/user/product.html', context)
+   else:
+      return render(request, 'citisoft/user/product.html', context)
+   
+   
+   
+   
+   
+   
+def authSearch(search_query):
+   try:
+     vendor = Vendor.objects.get(vendorName=search_query) 
+     if vendor.vendorName == search_query:
+        return vendor
+   except vendor.DoesNotExist:
+      return None
+
+
+def product(request,vendorName):   # Request handler
+   print("categoryId",vendorName)
+   category = Vendor.objects.get(vendorName=vendorName)
+   vendorCategories = Vendor.objects.filter(vendorName=category)
+   print("vendorCategories",vendorCategories)
+   context = {'vendorCategories': category}  
+   return render(request, 'citisoft/user/choice.html', context)
+
+def cat(request):   # Request handler
+   context = {}   # Initialize context dictionary
+   # Render index.html with context
+   
+   return render(request, 'citisoft/user/category.html', context)
+
+
+def search_vendors(request):
+    if request.method == 'POST':
+        search_query = request.POST.get('search_query')
+        if search_query:
+            vendors = Vendor.objects.filter(vendorName__icontains=search_query)
+            return render(request, 'citisoft/user/search_results.html', {'vendors': vendors})
+    return redirect('category')
+ 
+ 
+ 
+def vendor_info(request, vendorId):
+    vendor = Vendor.objects.get(vendorId=vendorId)
+    return render(request, 'citisoft/user/vendor_info.html', {'vendor': vendor})
