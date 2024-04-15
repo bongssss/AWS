@@ -75,18 +75,41 @@ def cartOperation(request, vendor_id):
    
    return redirect('choice', company) 
 
-def cart(request, vendor_id):   # Request handler
-      vendor_id= Vendor.vendorId
-      if request.user.is_authenticated:
-         client = request.user.client
-         saveorder, created = SaveOrder.objects.get_or_create(client=client)
-         items = saveorder.saveorderitem_set.all()
-      else:
-         #Create empty cart for now for non-logged in user
-         items = []
-      context = {'items':items} 
+def cart(request):   # Request handler
+     vendors = []
+     if 'cart' in request.session:
+        carts = request.session['cart']
+        for cart in carts:
+          print(cart)
+          vendor =  Vendor.objects.get(pk=int(cart))
+          vendors.append(vendor)
+          if request.method == "POST" and 'clientId' in request.session:
+             clientId = request.session['clientId']
+             client = Client.objects.get(pk=clientId)
+             for vendor in vendors:
+                SavedVendors.objects.create(vendor=vendor, client=client,savedVendorsId=vendor.vendorId)
+                
+             del request.session['cart']
+             return redirect('home')
+          else:
+            return render(request, 'citisoft/user/cart.html', {"vendors":vendors})
+     else:
+       return render(request, 'citisoft/user/cart.html', {"vendors":vendors}) 
+   
+   
       
-      return render(request, 'citisoft/user/cart.html', context)
+def clientinfo(request):
+    clients = []
+    vendorId = request.session['vendorId']    
+    savedVendors = SavedVendors.objects.all()
+    for savedVendor in savedVendors:
+       if savedVendor.vendor.vendorId == vendorId:
+          clients.append(savedVendor.client)
+          
+    return render(request,'citisoft/vendor/clientinfo.html',{"clients":clients})
+          
+          
+    
 
 
 
