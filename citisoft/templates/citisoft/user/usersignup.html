@@ -37,7 +37,7 @@
                        <br>
                        <div class="form-floating">
                            <label for="lastName">Full Name</label>
-                           <input type="text" class="form-control" name="fullname" id="lastName" placeholder="Name..">
+                           <input type="text" class="form-control" name="fullname" id="fullName" placeholder="Name..">
                        </div>
                        <br>
                        <div class="form-floating">
@@ -85,7 +85,7 @@
        </div>
    </main>
 
-   <script>
+<!---<script>
        document.getElementById('signupForm').addEventListener('submit', function (event) {
            var email = document.getElementById('email').value;
            var confirmEmail = document.getElementById('confirmEmail').value;
@@ -154,9 +154,45 @@
            // Password must be at least 8 characters long
            return password.length >= 8;
        }
-   </script>
+   </script>-->
 
         <!--<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>-->
         
+        <script>
+            function validateLoginForm() {
+                const fullName = document.getElementById('fullName').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+            
+                // Check if any field is empty
+                if (!fullName || !email || !password || !confirmPassword) {
+                    alert('Please fill in all required fields.');
+                    return false; // Prevent form submission
+                }
+            
+                // Validate email format (you can use a more robust email validation)
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email.match(emailRegex)) {
+                    alert('Please enter a valid email address.');
+                    return false;
+                }
+            
+                // Check if passwords match
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match.');
+                    return false;
+                }
+            
+                // All checks passed, allow form submission
+                return true;
+            }
+            // Attach the function to your form's submit button
+document.getElementById('signupForm').addEventListener('submit', function (event) {
+    if (!validateLoginForm()) {
+        event.preventDefault(); // Prevent form submission
+    }
+});
+        </script>
             </body>
 {% endblock content %}

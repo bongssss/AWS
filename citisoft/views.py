@@ -233,11 +233,11 @@ def userlogin(request):
        email = request.POST["email"]
        password = request.POST['password']
        client = authenticateClient(email, password)
-       print("client.id",client.pk)
+       #print("client.id",client.pk)
        if client is not None:
           request.session['clientId'] = client.pk
           return redirect('home')
-       else:
+       elif client is None:
           messages.error(request,"Invalid Email or Password")
        return render(request, 'citisoft/user/userlogin.html')
     
@@ -266,7 +266,7 @@ def usersignup(request):   # Request handler
        
        Client.objects.create(email=email, password=password, fullName=name,country=country)
        client = authenticateClientSignIn(email, password,confirmPassword)
-       print("client.clientId",client.pk)
+       #print("client.clientId",client.pk)
        if client is not None:
           print("signup2")
           request.session['clientId'] = client.pk
@@ -283,7 +283,7 @@ def usersignup(request):   # Request handler
 def vendor_home(request):   # Request handler
       if 'vendorId'  in request.session:  
          vendorId = request.session['vendorId'] 
-         print("vendorId",vendorId)  
+         #print("vendorId",vendorId)  
          vendor = Vendor.objects.get(pk=vendorId)
          context = {'vendor':vendor}   
          return render(request, 'citisoft/vendor/vendor_home.html', context)
@@ -300,13 +300,13 @@ def vendorsignup(request):   # Request handler
        name = request.POST['vendorname']
        Vendor.objects.create(email=email, password=password, vendorName=name)
        vendor = authenticateVendorSignIn(email, password)
-       print("vendor.vendorId",vendor.pk)
+       #print("vendor.vendorId",vendor.pk)
        if vendor is not None:
-          print("signup2")
+          #print("signup2")
           request.session['vendorId'] = vendor.pk
           return redirect('vendor_home')
        else:
-          print("signup3")
+          #print("signup3")
           messages.error(request,"Invalid Email or Password")
        return render(request, 'citisoft/vendor/vendorsignup.html')
     
@@ -319,7 +319,7 @@ def vendorlogin(request):   # Request handler
        email = request.POST["email"]
        password = request.POST['password']
        vendor = authenticateVendor(email, password)
-       print("vendor.vendorId",vendor.pk)
+       #print("vendor.vendorId",vendor.pk)
        if vendor is not None:
           request.session['vendorId'] = vendor.pk
           return redirect('vendor_home')
@@ -334,7 +334,7 @@ def vendorlogin(request):   # Request handler
 def edits(request):   # Request handler
       if 'vendorId'  in request.session:  
          vendorId = request.session['vendorId'] 
-         print("vendorId",vendorId)  
+        # print("vendorId",vendorId)  
          vendor = Vendor.objects.get(pk=vendorId)
 
          if request.method == "POST":    

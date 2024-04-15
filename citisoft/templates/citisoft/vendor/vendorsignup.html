@@ -79,7 +79,7 @@
   </div>
 </main>
 
-<script>
+<!--<script>
   document.getElementById('signupForm').addEventListener('submit', function(event) {
       var firstName = document.getElementById('firstName').value;
       var lastName = document.getElementById('lastName').value;
@@ -155,6 +155,42 @@
       // Company field must not be empty
       return company.trim() !== '';
   }
+</script>-->
+<script>
+    function validateLoginForm() {
+        const companyName = document.getElementById('company').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+       // const confirmPassword = document.getElementById('confirmPassword').value;
+    
+        // Check if any field is empty
+        if (!companyName || !email || !password ) {
+            alert('Please fill in all required fields.');
+            return false; // Prevent form submission
+        }
+    
+        // Validate email format (you can use a more robust email validation)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email.match(emailRegex)) {
+            alert('Please enter a valid email address.');
+            return false;
+        }
+    
+        // Check if passwords match
+        //if (password !== confirmPassword) {
+       //     alert('Passwords do not match.');
+       //     return false;
+       // }
+    
+        // All checks passed, allow form submission
+        return true;
+    }
+    // Attach the function to your form's submit button
+document.getElementById('signupForm').addEventListener('submit', function (event) {
+if (!validateLoginForm()) {
+event.preventDefault(); // Prevent form submission
+}
+});
 </script>
 
 
