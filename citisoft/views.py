@@ -229,16 +229,21 @@ def deleteVendor(request):   # Request handler
 
 
 def userlogin(request):
-   if request.method == 'POST':
+   # Check if the request method is POST
+   if request.method == 'POST':   
+      # Extract email and password from the POST data
        email = request.POST["email"]
        password = request.POST['password']
+        # Authenticate the client using the provided email and password
        client = authenticateClient(email, password)
-       #print("client.id",client.pk)
+       #if authentication is sucessful, print("client.id",client.pk) and redirect to home page 
        if client is not None:
           request.session['clientId'] = client.pk
           return redirect('home')
+       #if auth fail display error message
        elif client is None:
           messages.error(request,"Invalid Email or Password")
+          # Render the login page again
        return render(request, 'citisoft/user/userlogin.html')
     
    else:
@@ -253,29 +258,31 @@ def userlogin(request):
 
 
 def usersignup(request):   # Request handler
-   countries = Country.objects.all()
-   context = {'countries':countries}
-   if request.method == 'POST':
-       print("signup1")
-       email = request.POST["email"]
-       password = request.POST['password']
-       confirmPassword = request.POST['confirmPassword']
+   countries = Country.objects.all() # Retrieve all countries from the database
+   context = {'countries':countries}  # Create a context dictionary with countries data
+   if request.method == 'POST':   # Check if the request method is POST
+       print("signup1") # Print a message indicating the sign-up process has begun
+       email = request.POST["email"] # Extract email from the POST data
+       password = request.POST['password'] # Extract password from the POST data
+       confirmPassword = request.POST['confirmPassword'] 
        name = request.POST['fullname']
        countrySelect = request.POST['countrySelect']
        country = Country.objects.get(pk=int(countrySelect))
        
+        # Create a new Client object with the extracted data and save it to the database
        Client.objects.create(email=email, password=password, fullName=name,country=country)
+       # Authenticate the client using the provided email and password
        client = authenticateClientSignIn(email, password,confirmPassword)
        #print("client.clientId",client.pk)
        if client is not None:
           print("signup2")
           request.session['clientId'] = client.pk
-          return redirect('home')
+          return redirect('home') # Redirect the user to the home page
        else:
           print("signup3")
           messages.error(request,"Invalid Email or Password")
        return render(request, 'citisoft/user/usersignup.html')
-    
+     # If the request method is not POST, render the sign-up page with country data
    else:
       return render(request, 'citisoft/user/usersignup.html', context)
 
@@ -291,10 +298,10 @@ def vendor_home(request):   # Request handler
         return redirect('vendorlogin')
 
 def vendorsignup(request):   # Request handler
-   countries = Country.objects.all()
-   context = {'countries':countries}
-   if request.method == 'POST':
-       print("signup1")
+   countries = Country.objects.all() # Retrieve all countries from the database
+   context = {'countries':countries} # Create a context dictionary with countries data
+   if request.method == 'POST':   # Check if the request method is POST
+       print("signup1")   # Print a message for debugging
        email = request.POST["email"]
        password = request.POST['password']
        name = request.POST['vendorname']
@@ -303,32 +310,32 @@ def vendorsignup(request):   # Request handler
        #print("vendor.vendorId",vendor.pk)
        if vendor is not None:
           #print("signup2")
-          request.session['vendorId'] = vendor.pk
-          return redirect('vendor_home')
+          request.session['vendorId'] = vendor.pk # Store the vendor ID in the session
+          return redirect('vendor_home') # Redirect the vendor to the vendor home page
        else:
           #print("signup3")
-          messages.error(request,"Invalid Email or Password")
-       return render(request, 'citisoft/vendor/vendorsignup.html')
+          messages.error(request,"Invalid Email or Password")  # Display an error message
+       return render(request, 'citisoft/vendor/vendorsignup.html') # Render the vendor sign-up page
     
    else:
-      return render(request, 'citisoft/vendor/vendorsignup.html', context)
+      return render(request, 'citisoft/vendor/vendorsignup.html', context) # Render the vendor sign-up page with country data
 
 
 def vendorlogin(request):   # Request handler
-   if request.method == 'POST':
-       email = request.POST["email"]
-       password = request.POST['password']
-       vendor = authenticateVendor(email, password)
+   if request.method == 'POST':   # Check if the request method is POST
+       email = request.POST["email"]  # Extract email from the POST data
+       password = request.POST['password'] # Extract password from the POST data
+       vendor = authenticateVendor(email, password) # Authenticate the vendor using the provided email and password
        #print("vendor.vendorId",vendor.pk)
        if vendor is not None:
-          request.session['vendorId'] = vendor.pk
-          return redirect('vendor_home')
+          request.session['vendorId'] = vendor.pk  # Store the vendor ID in the session
+          return redirect('vendor_home')  # Redirect the vendor to the vendor home page
        else:
-          messages.error(request,"Invalid Email or Password")
-       return render(request, 'citisoft/vendor/vendorlogin.html')
+          messages.error(request,"Invalid Email or Password")  # Display an error message
+       return render(request, 'citisoft/vendor/vendorlogin.html')  # Render the vendor login page
     
    else:
-     return render(request, 'citisoft/vendor/vendorlogin.html')  
+     return render(request, 'citisoft/vendor/vendorlogin.html')  # Render the vendor login page
 
 
 def edits(request):   # Request handler
@@ -524,11 +531,15 @@ def cat(request):   # Request handler
 
 
 def search_vendors(request):
+    # Check if the request method is POST
     if request.method == 'POST':
+           # Extract the search query from the POST data
         search_query = request.POST.get('search_query')
+          # If a search query is provided, filter vendors based on the query and render search results
         if search_query:
             vendors = Vendor.objects.filter(vendorName__icontains=search_query)
             return render(request, 'citisoft/user/search_results.html', {'vendors': vendors})
+         # If request method is not POST or no search query provided, redirect to a predefined category page
     return redirect('category')
  
  
