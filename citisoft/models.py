@@ -23,7 +23,7 @@ class Vendor(models.Model):
     vendorId = models.AutoField(primary_key=True)
     password = models.CharField(max_length=200,null=True)
     website = models.URLField(null=True)
-    
+    da
  
 
     def __str__(self):
