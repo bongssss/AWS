@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: django-app
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn AWS.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: AWS.settings
+      - key: SECRET_KEY
+        value: django-insecure-dazc-f!x8foc%-6l%5sj47+2bpil@locgmp%y1qkvbxea6^-kk
+      - key: DEBUG
+        value: False
