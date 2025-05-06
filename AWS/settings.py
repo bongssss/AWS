@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-dazc-f!x8foc%-6l%5sj47+2bpil@locgmp%y1qkvbxea6^-kk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['aws-v271.onrender.com', 'localhost', '127.0.0.1'] 
+ALLOWED_HOSTS = ['aws-v271.onrender.com', 'https://aws-v271.onrender.com/','www.aws-v271.onrender.com/','localhost', '127.0.0.1'] 
 
 
 # Application definition
@@ -80,12 +80,9 @@ WSGI_APPLICATION = 'AWS.wsgi.application'
 import dj_database_url
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
+
 
 
 
