@@ -12,4 +12,4 @@ services:
       - key: DEBUG
         value: False
       - key:  DATABASE_URL
-        value: sqlite:///{BASE_DIR / 'db.sqlite3
+        value: postgresql://aws_db_lnlh_user:2pTkMeh8T45WiBMgOueqDnhNyJeL8HXh@dpg-d0ct74be5dus73ao14og-a/aws_db_lnlh
